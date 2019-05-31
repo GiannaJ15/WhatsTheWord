@@ -1,0 +1,30 @@
+.App {
+  text-align: center;
+  padding: 50px;
+  font-family: 'Comic Sans MS'
+}
+
+.WeatherInfo {
+    border-style: double;
+    border-width: 1px;
+    border-color: yellow;
+    border-radius: 10px;
+    display: inline-block;
+    padding: 10px;
+    background-color: #0080FF;
+    color: white;
+    top: 50;
+    left:0;
+    position: fixed;
+}
+
+.EventInfo {
+  border-style: double;
+  border-width: 1px;
+  border-color: blue;
+  border-radius: 10px;
+  display: inline-block;
+  padding: 10px;
+  background-color: #FFFF00;
+  color: black
+}

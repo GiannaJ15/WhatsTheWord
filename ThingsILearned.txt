@@ -1,0 +1,5 @@
+Things I learned:
+--You can't define const outside a method.
+--Any variables in .env are read at Build Time not in Dev Mode!!
+  So you have to restart the app if you're gonna add variables
+  to your .env file
