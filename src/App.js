@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 // import InputField from './components/InputField'
 import './App.css';
 import AutoComplete from './components/AutoSuggest'
+import EventInfoCard from './components/EventInfoCard'
 import cities from './cities.json';
 
 export default class App extends Component {
@@ -34,7 +35,7 @@ export default class App extends Component {
       .then((city) => this.setState({
         city: city
       }, () => {
-        fetch(`https://api.predicthq.com/v1/events/?active.gte=${todaysDate}&active.lte=${todaysDate}&?location_around.origin=${this.state.city.coord.lat},-${this.state.city.coord.lon}`, {
+        fetch(`https://api.predicthq.com/v1/events/?active.gte=${todaysDate}&active.lte=${todaysDate}&location_around.origin=${this.state.city.coord.lat},${this.state.city.coord.lon}`, {
           method: `GET`,
           headers:{
             'Accept': 'application/json',
@@ -64,7 +65,7 @@ export default class App extends Component {
           <ul style={{ listStyleType: "none" }}>
             <li> {this.state.city.weather[0].main} </li>
             <img src={`http://openweathermap.org/img/w/${this.state.city.weather[0].icon}.png`} alt="weather-icon"/>
-            <li> {this.state.city.main.temp} °F </li>
+            <li> {Math.floor((this.state.city.main.temp - 273.15)*(9/5)+32)} °F </li>
           </ul>
         </div>
     )
@@ -86,28 +87,7 @@ export default class App extends Component {
           {
             this.state.events.map(event => {
               return(
-                <div key = {event.title}>
-                <h3> {event.title} </h3>
-                <ul style={{ listStyleType: "none" }}>
-
-                  {
-                    (
-                      (event.entities.length !== 0) && (
-                        <li>
-                          Where? {event.entities[0].name}
-                        </li>
-                        )
-                    )
-                  }
-
-                  <li>
-                  When: {event.start.slice(11)}
-                  </li>
-                  <li>
-
-                  </li>
-                </ul>
-                </div>
+              <EventInfoCard key = {event} event = {event}/>
               )
             })
           }
@@ -129,7 +109,7 @@ export default class App extends Component {
           </h1>
         </div>
 
-        <AutoComplete receiveSearchTerm= {this.receiveSearchTerm} suggestions= {cities}/>
+        <AutoComplete receiveSearchTerm= {this.receiveSearchTerm}/>
 
 
         {
@@ -139,8 +119,6 @@ export default class App extends Component {
         {
           this.displayEvents()
         }
-
-
 
 
 
